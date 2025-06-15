@@ -1,5 +1,3 @@
-using System.IO;
-using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Mod", menuName = "ModsObjects/New Mod")]
@@ -13,6 +11,6 @@ public class SO_Mod : ScriptableObject
     [ContextMenu("Build To File")]
     public void Build()
     {
-        ModBuilder.BuildMod(this);
+        ModBuilder.RequestToBuildMod(this);
     }
 }

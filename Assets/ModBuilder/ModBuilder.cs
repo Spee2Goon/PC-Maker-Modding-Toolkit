@@ -1,28 +1,48 @@
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Xml.Linq;
 using UnityEditor;
-using UnityEditor.AddressableAssets;
-using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
 public static class ModBuilder
 {
     public const string ModExtension = "mod";
+    public const string AssemblyDefinitionName = "Mod Assembly Definition";
 
-    public static void BuildMod(SO_Mod mod)
+    public static void RequestToBuildMod(SO_Mod mod)
     {
-        string pathForSave = EditorUtility.SaveFilePanel("Select path to save mod", "Assets/", mod.Name, ModExtension);
+        string pathForSave = Path.GetDirectoryName(EditorUtility.SaveFilePanel("Select path to save mod", "Assets/", mod.Name, ModExtension));
 
         if (string.IsNullOrEmpty(pathForSave))
         {
+            Debug.LogError("Invalid mod path");
             return;
         }
 
+        string pathToAsmdef = Path.Combine(Application.dataPath, AssemblyDefinitionName) + ".asmdef";
+
+        if (!File.Exists(pathToAsmdef))
+        {
+            Debug.LogError("You have no assembly definition");
+            return;
+        }
+
+        BuildMod(mod, pathForSave, pathToAsmdef);
+    }
+
+    private static void BuildMod(SO_Mod mod, string pathForSave, string pathToAsmdef)
+    {
         Debug.Log("Save mod at " + pathForSave);
 
+        //CreateTempModFolder
+        string pathToModFolder = Path.Combine(pathForSave, mod.Name);
+        Directory.CreateDirectory(pathToModFolder);
+
         CompileSolution();
-        PackResources(mod, pathForSave);
+
+        PackResources(mod, pathToModFolder);
     }
 
     private static void CompileSolution()
@@ -62,24 +82,8 @@ public static class ModBuilder
     }
 
 
-    private static void PackResources(SO_Mod mod, string pathForSave)
+    private static void PackResources(SO_Mod mod, string pathToMod)
     {
-        AddressableAssetSettings settings = AddressableAssetSettingsDefaultObject.GetSettings(true);
-        if (settings == null)
-        {
-            return;
-        }
 
-        AddressableAssetSettings.BuildPlayerContent();
-
-        string modFolder = CreateModFolder(mod, pathForSave);
-    }
-
-    private static string CreateModFolder(SO_Mod mod, string pathForSave)
-    {
-        string modFolderPath = pathForSave + mod.name;
-        Directory.CreateDirectory(modFolderPath);
-
-        return modFolderPath;
     }
 }
