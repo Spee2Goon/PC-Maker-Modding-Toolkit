@@ -14,12 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Default Local Group
   m_GUID: e80321f1d86419d41ab663a184e3a636
-  m_SerializeEntries:
-  - m_GUID: d22280b13cbf9c649bfd27cc5e45f196
-    m_Address: Assets/ModBuilder/HelloUI.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: ab41429607d42f5488a636df361ab3eb, type: 2}
   m_SchemaSet:

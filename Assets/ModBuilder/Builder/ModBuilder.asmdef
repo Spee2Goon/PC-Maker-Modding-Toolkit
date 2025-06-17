@@ -1,16 +1,12 @@
 {
-    "name": "TestModAssembly",
+    "name": "ModBuilder",
     "rootNamespace": "",
-    "references": [
-        "GUID:5ac4b860b1b0a3a43a7f083aba6d39be"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": true,
-    "precompiledReferences": [
-        "Mono.Cecil.dll"
-    ],
+    "overrideReferences": false,
+    "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
