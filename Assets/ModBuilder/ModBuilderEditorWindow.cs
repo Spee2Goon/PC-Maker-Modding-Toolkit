@@ -1,19 +1,13 @@
-using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
-using UnityEditorInternal;
 using UnityEngine;
 public class ModBuilderEditorWindow : EditorWindow
 {
     private SO_ModInfo currentModInfo;
-    private SO_ModResources currentModResources;
     private Object currentAssemblyDefinition;
 
     private ModBuildType targetBuildType;
 
-
-    //Window staf
-    private ReorderableList _reorderableList;
 
     [MenuItem("PC Maker/Build Mod")]
     public static void OpenWindow()
@@ -21,7 +15,6 @@ public class ModBuilderEditorWindow : EditorWindow
         ModBuilderEditorWindow window = GetWindow<ModBuilderEditorWindow>("Mod Builder");
 
         window.currentModInfo = File.Exists(ModBuilder.PathToModInfo) ? AssetDatabase.LoadAssetAtPath<SO_ModInfo>(ModBuilder.PathToModInfo) : null;
-        window.currentModResources = File.Exists(ModBuilder.PathToModResources) ? AssetDatabase.LoadAssetAtPath<SO_ModResources>(ModBuilder.PathToModResources) : null;
         window.currentAssemblyDefinition = File.Exists(ModBuilder.PathToAssemblyDefinition) ? AssetDatabase.LoadAssetAtPath<Object>(ModBuilder.PathToAssemblyDefinition) : null;
 
         window.Show();
@@ -30,9 +23,6 @@ public class ModBuilderEditorWindow : EditorWindow
     private void OnGUI()
     {
         DrawModInfo();
-
-        GUILayout.Space(20);
-        DrawResourcesInfo();
 
         GUILayout.Space(20);
         DrawAssemblyInfo();
@@ -66,65 +56,14 @@ public class ModBuilderEditorWindow : EditorWindow
 
     private void CreateModInfoAsset()
     {
+        if (!Directory.Exists(Path.GetDirectoryName(ModBuilder.PathToModInfo)))
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(ModBuilder.PathToModInfo));
+        }
+        
         currentModInfo = CreateInstance<SO_ModInfo>();
 
         AssetDatabase.CreateAsset(currentModInfo, ModBuilder.PathToModInfo);
-
-        AssetDatabase.Refresh();
-    }
-
-    private void DrawResourcesInfo()
-    {
-        GUILayout.Label("Resources Info", EditorStyles.boldLabel);
-
-        currentModResources = (SO_ModResources)EditorGUILayout.ObjectField("Mod Resources Data", currentModResources, typeof(SO_ModResources), false);
-
-        if (currentModResources == null)
-        {
-            if (GUILayout.Button("Create Mod Resources"))
-            {
-                CreateResourcesAsset();
-            }
-        }
-        else
-        {
-            GUILayout.Space(5);
-
-            List<TextAsset> scripts = currentModResources.Scripts;
-
-            if (_reorderableList == null)
-            {
-                _reorderableList = new ReorderableList(currentModResources.Scripts, typeof(TextAsset), true, true, true, true);
-
-                _reorderableList.drawHeaderCallback = (Rect rect) =>
-                {
-                    EditorGUI.LabelField(rect, "Scripts");
-                };
-
-                _reorderableList.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
-                {
-                    TextAsset script = currentModResources.Scripts[index];
-
-                    script = (TextAsset)EditorGUI.ObjectField(rect, script, typeof(TextAsset), false);
-                    
-                    currentModResources.Scripts[index] = script;
-                };
-            }
-
-            Rect rect = GUILayoutUtility.GetRect(1, _reorderableList.GetHeight());
-
-            rect.x += 4;
-            rect.width -= 8;
-
-            _reorderableList.DoList(rect);
-        }
-    }
-
-    private void CreateResourcesAsset()
-    {
-        currentModResources = CreateInstance<SO_ModResources>();
-
-        AssetDatabase.CreateAsset(currentModResources, ModBuilder.PathToModResources);
 
         AssetDatabase.Refresh();
     }
@@ -142,10 +81,14 @@ public class ModBuilderEditorWindow : EditorWindow
         }
         else
         {
+            GUI.enabled = currentModInfo != null;
+
             if (GUILayout.Button("Create Assembly Definition"))
             {
                 CreateAssemblyDefinitionAsset();
             }
+
+            GUI.enabled = true;
         }
     }
 
@@ -158,8 +101,6 @@ public class ModBuilderEditorWindow : EditorWindow
 
     private void DrawButtons()
     {
-        GUI.enabled = currentAssemblyDefinition != null;
-
         GUI.enabled = currentModInfo != null;
 
         if (GUILayout.Button("Build Mod"))

@@ -63,8 +63,6 @@ public static class AssemblyBuilder
             $"pathForSave: {pathForSave}");
 
 
-        
-
         string arguments = $"\"{pathToSLN}\" /p:OutputPath=\"{pathForSave}\" ";
 
         if (compileWithDebug)
@@ -91,5 +89,24 @@ public static class AssemblyBuilder
 
         process.WaitForExit();
         process.Close();
+
+        ClearBuilderCompileInfo(pathForSave);
+    }
+
+    private static void ClearBuilderCompileInfo(string pathForSave)
+    {
+        string pathToBuilderDll = Path.Combine(pathForSave, "ModBuilder.dll");
+
+        if (File.Exists(pathToBuilderDll))
+        {
+            File.Delete(pathToBuilderDll);
+        }
+
+        string pathToBuilderPDB = Path.Combine(pathForSave, "ModBuilder.pdb");
+
+        if (File.Exists(pathToBuilderPDB))
+        {
+            File.Delete(pathToBuilderPDB);
+        }
     }
 }
