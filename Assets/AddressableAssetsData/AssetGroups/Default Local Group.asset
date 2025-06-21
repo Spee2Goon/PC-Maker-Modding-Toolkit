@@ -13,11 +13,21 @@ MonoBehaviour:
   m_Name: Default Local Group
   m_EditorClassIdentifier: 
   m_GroupName: Default Local Group
-  m_GUID: e80321f1d86419d41ab663a184e3a636
-  m_SerializeEntries: []
+  m_GUID: a6dd1dee877a8af4381e561864435738
+  m_SerializeEntries:
+  - m_GUID: 683a4ffa008f4504da0ebefbf8de2ae4
+    m_Address: Assets/Mod/Icon.jpg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e23ac7c7037067c4896339e7d14e10f4
+    m_Address: Assets/Mod/ModInfo.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: ab41429607d42f5488a636df361ab3eb, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: e68d83f84ba96b4408d481a73d03cebb, type: 2}
-    - {fileID: 11400000, guid: 7e9d161252c7aef48af6933824d41c48, type: 2}
+    - {fileID: 11400000, guid: 416bb1a031373c3429d42f9a38e580e9, type: 2}
+    - {fileID: 11400000, guid: 6bc49b1c71d16994390f5db2ef6577b1, type: 2}

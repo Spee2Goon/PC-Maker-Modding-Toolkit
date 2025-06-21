@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System.IO;
 using System.IO.Compression;
 
@@ -10,6 +12,7 @@ public enum ModBuildType
 public static class ModBuilder
 {
     public const string ModExtension = "mod";
+    public const string PathToModAssets = "Assets/Mod/";
     public const string PathToModInfo = "Assets/Mod/ModInfo.asset";
     public const string PathToModResources = "Assets/Mod/ModResources.asset";
     public const string PathToAssemblyDefinition = "Assets/Mod/ModAssemblyDefinition.asmdef";
@@ -20,6 +23,10 @@ public static class ModBuilder
         string pathToTempFolder = CreateTempFolder(pathForSave, modInfo.ModName);
 
         AssemblyBuilder.BuildAssembly(PathToAssemblyDefinition, pathToTempFolder, targetBuildType);
+
+        AddressablesBuilder.Build(pathToTempFolder, modInfo);
+
+        ManifestBuilder.Build(pathToTempFolder, modInfo);
 
         PackMod(pathToTempFolder, pathForSave, modInfo);
     }
@@ -54,3 +61,4 @@ public static class ModBuilder
         Directory.Delete(pathToTemporalFolder, true);
     }
 }
+#endif

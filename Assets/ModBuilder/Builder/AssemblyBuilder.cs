@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -22,7 +24,7 @@ public static class AssemblyBuilder
             {{
             ""name"": ""{rootNamespace}"",
             ""rootNamespace"": ""{rootNamespace}"",
-            ""references"": [""ModBuilder""],
+            ""references"": [""ModBuilder"", ""GameLogic"", ""UnityAddressables"", ""Unity.ResourceManager""],
             ""includePlatforms"": [],
             ""excludePlatforms"": [],
             ""allowUnsafeCode"": false,
@@ -42,7 +44,6 @@ public static class AssemblyBuilder
 
         Debug.Log("pathToMs: " + pathToMs);
 
-        //BuildSolution
         string[] pathsToSLNs = Directory.GetFiles($"{Application.dataPath}/../", "*.sln");
 
         if (pathsToSLNs.Length > 0)
@@ -95,18 +96,20 @@ public static class AssemblyBuilder
 
     private static void ClearBuilderCompileInfo(string pathForSave)
     {
-        string pathToBuilderDll = Path.Combine(pathForSave, "ModBuilder.dll");
+        string[] paths = new string[] {
+            Path.Combine(pathForSave, "ModBuilder.dll"),
+            Path.Combine(pathForSave, "ModBuilder.pdb"),
+            Path.Combine(pathForSave, "GameLogic.dll"),
+            Path.Combine(pathForSave, "GameLogic.pdb"),
+        };
 
-        if (File.Exists(pathToBuilderDll))
+        for (int i = 0; i < paths.Length; i++)
         {
-            File.Delete(pathToBuilderDll);
-        }
-
-        string pathToBuilderPDB = Path.Combine(pathForSave, "ModBuilder.pdb");
-
-        if (File.Exists(pathToBuilderPDB))
-        {
-            File.Delete(pathToBuilderPDB);
+            if (File.Exists(paths[i]))
+            {
+                File.Delete(paths[i]);
+            }
         }
     }
 }
+#endif

@@ -1,6 +1,9 @@
+#if UNITY_EDITOR
+
 using System.IO;
 using UnityEditor;
 using UnityEngine;
+
 public class ModBuilderEditorWindow : EditorWindow
 {
     private SO_ModInfo currentModInfo;
@@ -60,7 +63,7 @@ public class ModBuilderEditorWindow : EditorWindow
         {
             Directory.CreateDirectory(Path.GetDirectoryName(ModBuilder.PathToModInfo));
         }
-        
+
         currentModInfo = CreateInstance<SO_ModInfo>();
 
         AssetDatabase.CreateAsset(currentModInfo, ModBuilder.PathToModInfo);
@@ -125,3 +128,4 @@ public class ModBuilderEditorWindow : EditorWindow
         ModBuilder.BuildMod(pathForSave, currentModInfo, targetBuildType);
     }
 }
+#endif
