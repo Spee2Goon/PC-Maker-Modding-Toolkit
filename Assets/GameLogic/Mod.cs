@@ -39,6 +39,6 @@ public interface IWorkOnGameplayMod
 {
     void OnLoadOnGameScene();
     void OnUnloadFromGameScene();
-    void OnPlauseEnabled();
-    void OnPlauseDisabled();
+    void OnPauseEnabled();
+    void OnPauseDisabled();
 }
