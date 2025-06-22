@@ -1,18 +1,24 @@
+#if UNITY_EDITOR
+
 using System.IO;
-using UnityEngine;
 
-public static class ManifestBuilder
+namespace Mod.ModBuilder
 {
-    public static void Build(string pathForSave, SO_ModInfo modInfo)
+    public static class ManifestBuilder
     {
-        string path = Path.Combine(pathForSave, "manifest.json");
+        public static void Build(string pathForSave, SO_ModInfo modInfo)
+        {
+            string path = Path.Combine(pathForSave, "manifest.json");
 
-        string manifest =
-            @$"{{
+            string manifest =
+                @$"{{
                 ""ModName"": ""{modInfo.ModName}"",
                 ""ModVersion"": ""{modInfo.ModVersion}""
             }}";
 
-        File.WriteAllText(path, manifest);
+            File.WriteAllText(path, manifest);
+        }
     }
 }
+
+#endif

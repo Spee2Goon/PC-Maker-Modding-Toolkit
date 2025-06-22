@@ -1,26 +1,29 @@
 using System;
 using System.Diagnostics;
 
-public class MSBuildPathFinder
+namespace Mod.ModBuilder
 {
-    public static string GetMsBuildPath()
+    public class MSBuildPathFinder
     {
-        string vsWhere = Environment.ExpandEnvironmentVariables(@"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe");
-
-        ProcessStartInfo startInfo = new ProcessStartInfo(vsWhere)
+        public static string GetMsBuildPath()
         {
-            Arguments = "-latest -products * -requires Microsoft.Component.MSBuild -find MSBuild\\**\\Bin\\MSBuild.exe",
-            RedirectStandardOutput = true,
-            UseShellExecute = false,
-            CreateNoWindow = true
-        };
+            string vsWhere = Environment.ExpandEnvironmentVariables(@"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe");
 
-        Process process = Process.Start(startInfo);
+            ProcessStartInfo startInfo = new ProcessStartInfo(vsWhere)
+            {
+                Arguments = "-latest -products * -requires Microsoft.Component.MSBuild -find MSBuild\\**\\Bin\\MSBuild.exe",
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
 
-        process.WaitForExit();
+            Process process = Process.Start(startInfo);
 
-        string finalPath = process.StandardOutput.ReadToEnd().Trim();
+            process.WaitForExit();
 
-        return finalPath;
+            string finalPath = process.StandardOutput.ReadToEnd().Trim();
+
+            return finalPath;
+        }
     }
 }

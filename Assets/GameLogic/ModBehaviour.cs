@@ -1,48 +1,75 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
-public class ModBehaviour : MonoBehaviour
+namespace Mod.GameLogic
 {
-    private IMod mod;
-
-    public IAwakeableMod awakeable;
-    public IStartableMod startable;
-    public IUpdatableMod updatable;
-    public IFixedUpdatableMod fixedUpdatable;
-
-    public void Initialize(IMod mod)
+    public class ModBehaviour : MonoBehaviour
     {
-        this.mod = mod;
-        if (awakeable is IAwakeableMod) { awakeable = mod as IAwakeableMod; }
-        if (mod is IStartableMod) { startable = mod as IStartableMod; }
-        if (mod is IUpdatableMod) { updatable = mod as IUpdatableMod; }
-        if (mod is IFixedUpdatableMod) { fixedUpdatable = mod as IFixedUpdatableMod; }
+        private IMod mod;
 
-        mod.Initialize(this);
-    }
+        //MonoBehaviour
+        private IAwakeableMod awakeable;
+        private IStartableMod startable;
+        private IUpdatableMod updatable;
+        private IFixedUpdatableMod fixedUpdatable;
+        private ILateUpdatableMod lateUpdatable;
 
-    public void Awake()
-    {
-        awakeable?.Awake();
-    }
+        //Game
+        private IWorkOnMainMenuMod workOnMainMenu;
+        private IWorkOnGameplayMod workOnGameplay;
 
-    public void Start()
-    {
-        startable?.Start();
-    }
+        public void Initialize(IMod mod)
+        {
+            this.mod = mod;
 
-    public void Update()
-    {
-        updatable?.Update();
-    }
+            awakeable = mod as IAwakeableMod;
+            startable = mod as IStartableMod;
+            updatable = mod as IUpdatableMod;
+            fixedUpdatable = mod as IFixedUpdatableMod;
+            lateUpdatable = mod as ILateUpdatableMod;
 
-    public void FixedUpdate()
-    {
-        fixedUpdatable?.FixedUpdate();
-    }
+            workOnMainMenu = mod as IWorkOnMainMenuMod;
+            workOnGameplay = mod as IWorkOnGameplayMod;
 
-    public Coroutine StartCoroutineByMod(IEnumerator coroutine)
-    {
-        return StartCoroutine(coroutine);
+            mod.Initialize(this);
+
+            Debug.Log($"[Mod] {mod.GetType().Name} initialized");
+        }
+
+
+        private void Awake() => InvokeModAction(() => awakeable?.Awake(), nameof(Awake));
+
+        private void Start() => InvokeModAction(() => startable?.Start(), nameof(Start));
+
+        private void Update() => InvokeModAction(() => updatable?.Update(), nameof(Update));
+
+        private void FixedUpdate() => InvokeModAction(() => fixedUpdatable?.FixedUpdate(), nameof(FixedUpdate));
+
+        private void LateUpdate() => InvokeModAction(() => lateUpdatable?.LateUpdate(), nameof(LateUpdate));
+
+
+        private void InvokeModAction(Action action, string modActionName)
+        {
+            try { action?.Invoke(); }
+            catch (Exception e) { Debug.LogError($"[Mod Error] {mod.GetType().Name}:{modActionName} - {e}"); }
+        }
+
+
+
+        public Coroutine StartCoroutineByMod(IEnumerator coroutine)
+        {
+            return StartCoroutine(coroutine);
+        }
+
+        public void StopCoroutineByMod(IEnumerator coroutine)
+        {
+            StopCoroutine(coroutine);
+        }
+
+        public void StopCoroutineByMod(string coroutineName)
+        {
+            StopCoroutine(coroutineName);
+        }
     }
 }

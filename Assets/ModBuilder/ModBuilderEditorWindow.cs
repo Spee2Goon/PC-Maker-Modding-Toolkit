@@ -4,128 +4,131 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-public class ModBuilderEditorWindow : EditorWindow
+namespace Mod.ModBuilder
 {
-    private SO_ModInfo currentModInfo;
-    private Object currentAssemblyDefinition;
-
-    private ModBuildType targetBuildType;
-
-
-    [MenuItem("PC Maker/Build Mod")]
-    public static void OpenWindow()
+    public class ModBuilderEditorWindow : EditorWindow
     {
-        ModBuilderEditorWindow window = GetWindow<ModBuilderEditorWindow>("Mod Builder");
+        private SO_ModInfo currentModInfo;
+        private Object currentAssemblyDefinition;
 
-        window.currentModInfo = File.Exists(ModBuilder.PathToModInfo) ? AssetDatabase.LoadAssetAtPath<SO_ModInfo>(ModBuilder.PathToModInfo) : null;
-        window.currentAssemblyDefinition = File.Exists(ModBuilder.PathToAssemblyDefinition) ? AssetDatabase.LoadAssetAtPath<Object>(ModBuilder.PathToAssemblyDefinition) : null;
+        private ModBuildType targetBuildType;
 
-        window.Show();
-    }
 
-    private void OnGUI()
-    {
-        DrawModInfo();
-
-        GUILayout.Space(20);
-        DrawAssemblyInfo();
-
-        GUILayout.Space(20);
-        DrawButtons();
-    }
-
-    private void DrawModInfo()
-    {
-        GUILayout.Label("Mod Info", EditorStyles.boldLabel);
-
-        currentModInfo = (SO_ModInfo)EditorGUILayout.ObjectField("Mod Info Data", currentModInfo, typeof(SO_ModInfo), false);
-
-        if (currentModInfo == null)
+        [MenuItem("PC Maker/Build Mod")]
+        public static void OpenWindow()
         {
-            if (GUILayout.Button("Create Mod Info"))
+            ModBuilderEditorWindow window = GetWindow<ModBuilderEditorWindow>("Mod Builder");
+
+            window.currentModInfo = File.Exists(ModBuilder.PathToModInfo) ? AssetDatabase.LoadAssetAtPath<SO_ModInfo>(ModBuilder.PathToModInfo) : null;
+            window.currentAssemblyDefinition = File.Exists(ModBuilder.PathToAssemblyDefinition) ? AssetDatabase.LoadAssetAtPath<Object>(ModBuilder.PathToAssemblyDefinition) : null;
+
+            window.Show();
+        }
+
+        private void OnGUI()
+        {
+            DrawModInfo();
+
+            GUILayout.Space(20);
+            DrawAssemblyInfo();
+
+            GUILayout.Space(20);
+            DrawButtons();
+        }
+
+        private void DrawModInfo()
+        {
+            GUILayout.Label("Mod Info", EditorStyles.boldLabel);
+
+            currentModInfo = (SO_ModInfo)EditorGUILayout.ObjectField("Mod Info Data", currentModInfo, typeof(SO_ModInfo), false);
+
+            if (currentModInfo == null)
             {
-                CreateModInfoAsset();
+                if (GUILayout.Button("Create Mod Info"))
+                {
+                    CreateModInfoAsset();
+                }
+            }
+            else
+            {
+                GUILayout.Space(5);
+
+                currentModInfo.ModName = EditorGUILayout.TextField("Name", currentModInfo.ModName);
+
+                currentModInfo.ModVersion = EditorGUILayout.TextField("Version", currentModInfo.ModVersion);
             }
         }
-        else
+
+        private void CreateModInfoAsset()
         {
-            GUILayout.Space(5);
+            if (!Directory.Exists(Path.GetDirectoryName(ModBuilder.PathToModInfo)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(ModBuilder.PathToModInfo));
+            }
 
-            currentModInfo.ModName = EditorGUILayout.TextField("Name", currentModInfo.ModName);
+            currentModInfo = CreateInstance<SO_ModInfo>();
 
-            currentModInfo.ModVersion = EditorGUILayout.TextField("Version", currentModInfo.ModVersion);
-        }
-    }
+            AssetDatabase.CreateAsset(currentModInfo, ModBuilder.PathToModInfo);
 
-    private void CreateModInfoAsset()
-    {
-        if (!Directory.Exists(Path.GetDirectoryName(ModBuilder.PathToModInfo)))
-        {
-            Directory.CreateDirectory(Path.GetDirectoryName(ModBuilder.PathToModInfo));
+            AssetDatabase.Refresh();
         }
 
-        currentModInfo = CreateInstance<SO_ModInfo>();
-
-        AssetDatabase.CreateAsset(currentModInfo, ModBuilder.PathToModInfo);
-
-        AssetDatabase.Refresh();
-    }
-
-    private void DrawAssemblyInfo()
-    {
-        GUILayout.Label("Assembly Info", EditorStyles.boldLabel);
-
-        currentAssemblyDefinition = (Object)EditorGUILayout.ObjectField("Assembly Definition Asset", currentAssemblyDefinition, typeof(Object), false);
-
-
-        if (currentAssemblyDefinition != null)
+        private void DrawAssemblyInfo()
         {
-            targetBuildType = (ModBuildType)EditorGUILayout.EnumPopup("Build Type", (ModBuildType)targetBuildType);
+            GUILayout.Label("Assembly Info", EditorStyles.boldLabel);
+
+            currentAssemblyDefinition = (Object)EditorGUILayout.ObjectField("Assembly Definition Asset", currentAssemblyDefinition, typeof(Object), false);
+
+
+            if (currentAssemblyDefinition != null)
+            {
+                targetBuildType = (ModBuildType)EditorGUILayout.EnumPopup("Build Type", (ModBuildType)targetBuildType);
+            }
+            else
+            {
+                GUI.enabled = currentModInfo != null && currentModInfo.ModName != SO_ModInfo.DefaultModName;
+
+                if (GUILayout.Button("Create Assembly Definition"))
+                {
+                    CreateAssemblyDefinitionAsset();
+                }
+
+                GUI.enabled = true;
+            }
         }
-        else
+
+        private void CreateAssemblyDefinitionAsset()
+        {
+            AssemblyBuilder.CreateAssemblyDefinition(currentModInfo, ModBuilder.PathToAssemblyDefinition);
+
+            currentAssemblyDefinition = AssetDatabase.LoadAssetAtPath<Object>(ModBuilder.PathToAssemblyDefinition);
+        }
+
+        private void DrawButtons()
         {
             GUI.enabled = currentModInfo != null;
 
-            if (GUILayout.Button("Create Assembly Definition"))
+            if (GUILayout.Button("Build Mod"))
             {
-                CreateAssemblyDefinitionAsset();
+                BuildMod();
+            }
+        }
+
+
+        private void BuildMod()
+        {
+            //Path where save mod
+            string pathForSave = EditorUtility.SaveFolderPanel("Select path to save mod", "Assets/", "");
+
+            if (pathForSave == null || pathForSave == string.Empty)
+            {
+                return;
             }
 
-            GUI.enabled = true;
+            Debug.Log("Save mod at: " + pathForSave);
+
+            ModBuilder.BuildMod(pathForSave, currentModInfo, targetBuildType);
         }
-    }
-
-    private void CreateAssemblyDefinitionAsset()
-    {
-        AssemblyBuilder.CreateAssemblyDefinition(currentModInfo, ModBuilder.PathToAssemblyDefinition);
-
-        currentAssemblyDefinition = AssetDatabase.LoadAssetAtPath<Object>(ModBuilder.PathToAssemblyDefinition);
-    }
-
-    private void DrawButtons()
-    {
-        GUI.enabled = currentModInfo != null;
-
-        if (GUILayout.Button("Build Mod"))
-        {
-            BuildMod();
-        }
-    }
-
-
-    private void BuildMod()
-    {
-        //Path where save mod
-        string pathForSave = EditorUtility.SaveFolderPanel("Select path to save mod", "Assets/", "");
-
-        if (pathForSave == null || pathForSave == string.Empty)
-        {
-            return;
-        }
-
-        Debug.Log("Save mod at: " + pathForSave);
-
-        ModBuilder.BuildMod(pathForSave, currentModInfo, targetBuildType);
     }
 }
 #endif

@@ -1,7 +1,13 @@
 using UnityEngine;
 
-public class SO_ModInfo : ScriptableObject
+namespace Mod.ModBuilder
 {
-    public string ModName = "New Mod";
-    public string ModVersion = "1";
+    public class SO_ModInfo : ScriptableObject
+    {
+        public string ModName = DefaultModName;
+        public string ModVersion = "1";
+
+
+        public const string DefaultModName = "Your Mod Name";
+    }
 }
