@@ -2,6 +2,8 @@
 
 using System.IO;
 using System.IO.Compression;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 
 namespace Mod.ModBuilder
@@ -32,6 +34,8 @@ namespace Mod.ModBuilder
             ManifestBuilder.Build(pathToTempFolder, modInfo);
 
             PackMod(pathToTempFolder, pathForSave, modInfo);
+
+            ClearAfterBuild();
         }
 
         private static string CreateTempFolder(string pathForSave, string folderName)
@@ -60,8 +64,14 @@ namespace Mod.ModBuilder
                 }
             }
 
-            ZipFile.CreateFromDirectory(pathToTemporalFolder, pathToZip, CompressionLevel.Optimal, includeBaseDirectory: false);
+            ZipFile.CreateFromDirectory(pathToTemporalFolder, pathToZip, System.IO.Compression.CompressionLevel.Optimal, includeBaseDirectory: false);
             Directory.Delete(pathToTemporalFolder, true);
+        }
+
+        private static void ClearAfterBuild()
+        {
+            Addressables.ClearResourceLocators();
+            Caching.ClearCache();
         }
     }
 }

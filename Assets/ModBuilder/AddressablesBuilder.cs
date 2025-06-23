@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 
 using System.IO;
+using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Build;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
@@ -9,16 +10,18 @@ namespace Mod.ModBuilder
 {
     public static class AddressablesBuilder
     {
+        public const string ModLoadVariable = "{PcMakerModsPath}";
+
         public static void Build(string pathForSave, SO_ModInfo modInfo)
         {
+            SetBuildPath(pathForSave);
+            SetLoadPath(ModLoadVariable);
+
             AddressableAssetSettings.BuildPlayerContent(out AddressablesPlayerBuildResult result);
 
             if (string.IsNullOrEmpty(result.Error))
             {
                 Debug.Log("Mod Content Build Success!");
-
-                MoveBuildInfo(pathForSave);
-                MoveBundles(pathForSave);
             }
             else
             {
@@ -27,36 +30,16 @@ namespace Mod.ModBuilder
         }
 
 
-        public static void MoveBuildInfo(string path)
+        public static void SetBuildPath(string path)
         {
-            string pathToAsset = Application.dataPath + "/../" + "Library/" + "com.unity.addressables/" + "aa/" + "Windows/";
-
-            string[] assetNames = new string[] { "catalog.json", "catalog.hash", "settings.json" };
-
-            for (int i = 0; i < assetNames.Length; i++)
-            {
-                if (File.Exists(pathToAsset + assetNames[i]))
-                {
-                    Debug.Log("Move: " + assetNames[i]);
-
-                    File.Move(pathToAsset + "/" + assetNames[i], path + "/" + assetNames[i]);
-                }
-            }
+            AddressableAssetSettingsDefaultObject.Settings.profileSettings.CreateValue("ModBuildPath", path);
+            AddressableAssetSettingsDefaultObject.Settings.profileSettings.SetValue(AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModBuildPath", path);
         }
 
-        private static void MoveBundles(string path)
+        public static void SetLoadPath(string path)
         {
-            string pathToAsset = Application.dataPath + "/../" + "ServerData/" + "StandaloneWindows64";
-
-            string[] pathsToBundles = Directory.GetFiles(pathToAsset, "*.bundle");
-
-
-            for (int i = 0; i < pathsToBundles.Length; i++)
-            {
-                Debug.Log("Move: " + pathsToBundles[i]);
-
-                File.Move(pathsToBundles[i], path + "/" + Path.GetFileName(pathsToBundles[i]));
-            }
+            AddressableAssetSettingsDefaultObject.Settings.profileSettings.CreateValue("ModLoadPath", path);
+            AddressableAssetSettingsDefaultObject.Settings.profileSettings.SetValue(AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "ModLoadPath", path);
         }
     }
 }
