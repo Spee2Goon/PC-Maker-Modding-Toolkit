@@ -26,7 +26,7 @@ namespace Mod.ModBuilder
             {{
             ""name"": ""{rootNamespace}"",
             ""rootNamespace"": ""{rootNamespace}"",
-            ""references"": [""ModBuilder"", ""GameLogic"", ""Unity.Addressables"", ""Unity.ResourceManager""],
+            ""references"": [""ModBuilder"", ""PCMaker.ModAPI"", ""Unity.Addressables"", ""Unity.ResourceManager""],
             ""includePlatforms"": [],
             ""excludePlatforms"": [],
             ""allowUnsafeCode"": false,
@@ -101,8 +101,8 @@ namespace Mod.ModBuilder
             string[] paths = new string[] {
             Path.Combine(pathForSave, "ModBuilder.dll"),
             Path.Combine(pathForSave, "ModBuilder.pdb"),
-            Path.Combine(pathForSave, "GameLogic.dll"),
-            Path.Combine(pathForSave, "GameLogic.pdb"),
+            Path.Combine(pathForSave, "PCMaker.ModAPI.dll"),
+            Path.Combine(pathForSave, "PCMaker.ModAPI.pdb"),
         };
 
             for (int i = 0; i < paths.Length; i++)

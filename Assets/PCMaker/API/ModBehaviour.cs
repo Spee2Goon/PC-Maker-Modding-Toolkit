@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Mod.GameLogic
+namespace PCMaker.ModAPI
 {
     public class ModBehaviour : MonoBehaviour
     {

@@ -1,11 +1,13 @@
 {
-    "name": "GameLogic",
-    "rootNamespace": "Mod.GameLogic",
-    "references": [],
+    "name": "PCMaker.ModAPI",
+    "rootNamespace": "PCMaker.ModAPI",
+    "references": [
+        "Unity.TextMeshPro"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
+    "overrideReferences": true,
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],

@@ -1,4 +1,4 @@
-namespace Mod.GameLogic
+namespace PCMaker.ModAPI
 {
     public interface IMod
     {
