@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using VContainer;
 
 namespace PCMaker.ModAPI
 {
@@ -19,7 +20,7 @@ namespace PCMaker.ModAPI
         private IWorkOnMainMenuMod workOnMainMenu;
         private IWorkOnGameplayMod workOnGameplay;
 
-        public void Initialize(IMod mod)
+        public void SetMod(IMod mod)
         {
             this.mod = mod;
 
@@ -31,8 +32,20 @@ namespace PCMaker.ModAPI
 
             workOnMainMenu = mod as IWorkOnMainMenuMod;
             workOnGameplay = mod as IWorkOnGameplayMod;
+        }
 
-            mod.Initialize(this);
+        public void InitializeMod(IObjectResolver resolver)
+        {
+            resolver.Inject(mod);
+
+            try
+            {
+                mod.Initialize(this);
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
 
             Debug.Log($"[Mod] {mod.GetType().Name} initialized");
         }

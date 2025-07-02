@@ -2,7 +2,8 @@
     "name": "PCMaker.ModAPI",
     "rootNamespace": "PCMaker.ModAPI",
     "references": [
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "VContainer"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

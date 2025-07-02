@@ -41,7 +41,5 @@ namespace PCMaker.ModAPI
     {
         void OnLoadOnGameScene();
         void OnUnloadFromGameScene();
-        void OnPauseEnabled();
-        void OnPauseDisabled();
     }
 }
