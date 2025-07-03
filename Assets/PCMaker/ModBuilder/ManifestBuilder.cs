@@ -12,9 +12,9 @@ namespace Mod.ModBuilder
 
             string manifest =
                 @$"{{
-                ""ModName"": ""{modInfo.ModName}"",
-                ""ModVersion"": ""{modInfo.ModVersion}""
-            }}";
+""ModName"": ""{modInfo.ModName}"",
+""ModVersion"": ""{modInfo.ModVersion}""
+}}";
 
             File.WriteAllText(path, manifest);
         }

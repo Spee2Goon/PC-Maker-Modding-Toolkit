@@ -1,9 +1,13 @@
 using System.Collections.ObjectModel;
+using UnityEngine;
 
 namespace PCMaker.ModAPI
 {
     public interface IModConsoleService
     {
+        //void SetCustomFactory(IModConsoleFactory factory);
+        bool IsConsoleViewCreated();
+        GameObject GetConsoleView();
         void OpenConsole(bool withAnimation);
         void CloseConsole(bool withAnimation);
         void RegisterCommand(IModConsoleCommand command);

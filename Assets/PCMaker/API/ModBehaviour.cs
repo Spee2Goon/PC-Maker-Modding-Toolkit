@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using VContainer;
 
@@ -17,8 +18,8 @@ namespace PCMaker.ModAPI
         private ILateUpdatableMod lateUpdatable;
 
         //Game
-        private IWorkOnMainMenuMod workOnMainMenu;
-        private IWorkOnGameplayMod workOnGameplay;
+        public IWorkOnMainMenuMod workOnMainMenu;
+        public IWorkOnGameplayMod workOnGameplay;
 
         public void SetMod(IMod mod)
         {
@@ -32,6 +33,11 @@ namespace PCMaker.ModAPI
 
             workOnMainMenu = mod as IWorkOnMainMenuMod;
             workOnGameplay = mod as IWorkOnGameplayMod;
+        }
+
+        public async Task LoadModResources()
+        {
+            await mod.LoadModResources();
         }
 
         public void InitializeMod(IObjectResolver resolver)
