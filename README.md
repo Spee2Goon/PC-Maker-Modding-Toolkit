@@ -23,6 +23,7 @@ IOrbitCameraService
 IOutlineService
 IPauseService
 IPlacementService
+IPlacementInfoService
 IPlayerService
 IRaycastService
 IScreenResolutionService
