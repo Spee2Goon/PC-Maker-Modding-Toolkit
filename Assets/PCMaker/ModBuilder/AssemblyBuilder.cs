@@ -40,7 +40,7 @@ namespace Mod.ModBuilder
         }
 
 
-        public static void BuildAssembly(string pathToAssemblyDefinition, string pathForSave, ModBuildType targetBuildType)
+        public static void BuildAssembly(string pathForSave, ModBuildType targetBuildType)
         {
             string pathToMs = MSBuildPathFinder.GetMsBuildPath();
 
@@ -60,7 +60,7 @@ namespace Mod.ModBuilder
 
         private static void RunCompiler(string pathToMs, string pathToSLN, string pathForSave, bool compileWithDebug)
         {
-            Debug.Log($"RunCompiler \n" +
+            Debug.Log("RunCompiler \n" +
                 $"pathToMs: {pathToMs}\n" +
                 $"pathToSLN: {pathToSLN}\n" +
                 $"pathForSave: {pathForSave}");
@@ -70,11 +70,11 @@ namespace Mod.ModBuilder
 
             if (compileWithDebug)
             {
-                arguments += $"/p:Configuration=Debug  /p:DebugSymbols=true /p:DebugType=full /p:DebugInfo=full";
+                arguments += "/p:Configuration=Debug  /p:DebugSymbols=true /p:DebugType=full /p:DebugInfo=full";
             }
             else
             {
-                arguments += $"/p:Configuration=Release /p:DebugSymbols=false /p:DebugType=none /p:DebugInfo=none";
+                arguments += "/p:Configuration=Release /p:DebugSymbols=false /p:DebugType=none /p:DebugInfo=none";
             }
 
 

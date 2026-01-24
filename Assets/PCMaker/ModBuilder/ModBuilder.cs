@@ -17,9 +17,7 @@ namespace Mod.ModBuilder
     public static class ModBuilder
     {
         public const string ModExtension = "mod";
-        public const string PathToModAssets = "Assets/Mod/";
         public const string PathToModInfo = "Assets/Mod/ModInfo.asset";
-        public const string PathToModResources = "Assets/Mod/ModResources.asset";
         public const string PathToAssemblyDefinition = "Assets/Mod/ModAssemblyDefinition.asmdef";
 
 
@@ -27,9 +25,9 @@ namespace Mod.ModBuilder
         {
             string pathToTempFolder = CreateTempFolder(pathForSave, modInfo.ModName);
 
-            AssemblyBuilder.BuildAssembly(PathToAssemblyDefinition, pathToTempFolder, targetBuildType);
+            AssemblyBuilder.BuildAssembly(pathToTempFolder, targetBuildType);
 
-            AddressablesBuilder.Build(pathToTempFolder, modInfo);
+            AddressablesBuilder.Build(pathToTempFolder);
 
             ManifestBuilder.Build(pathToTempFolder, modInfo);
 

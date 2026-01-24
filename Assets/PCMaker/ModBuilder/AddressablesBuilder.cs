@@ -1,6 +1,5 @@
 #if UNITY_EDITOR
 
-using System.IO;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Build;
 using UnityEditor.AddressableAssets.Settings;
@@ -12,7 +11,7 @@ namespace Mod.ModBuilder
     {
         public const string ModLoadVariable = "{PcMakerModsPath}";
 
-        public static void Build(string pathForSave, SO_ModInfo modInfo)
+        public static void Build(string pathForSave)
         {
             SetBuildPath(pathForSave);
             SetLoadPath(ModLoadVariable);
