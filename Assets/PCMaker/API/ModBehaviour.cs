@@ -35,9 +35,9 @@ namespace PCMaker.ModAPI
             workOnGameplay = mod as IWorkOnGameplayMod;
         }
 
-        public async Task LoadModResources()
+        public virtual async Task LoadModResources()
         {
-            await mod.LoadModResources();
+            
         }
 
         public void InitializeMod(IObjectResolver resolver)

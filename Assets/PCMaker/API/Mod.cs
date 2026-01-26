@@ -5,7 +5,6 @@ namespace PCMaker.ModAPI
     public interface IMod
     {
         void Initialize(ModBehaviour mod);
-        Task LoadModResources();
         bool CanBeDisabled();
     }
 

@@ -1,9 +1,9 @@
 #if UNITY_EDITOR
 
+using PCMaker.ModAPI;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Build;
 using UnityEditor.AddressableAssets.Settings;
-using UnityEngine;
 
 namespace Mod.ModBuilder
 {
@@ -20,11 +20,11 @@ namespace Mod.ModBuilder
 
             if (string.IsNullOrEmpty(result.Error))
             {
-                Debug.Log("Mod Content Build Success!");
+                ModBuildLoger.Add("Mod Content Build Success!");
             }
             else
             {
-                Debug.LogError("Build Error: " + result.Error);
+                ModBuildLoger.Add("Build Error: " + result.Error);
             }
         }
 

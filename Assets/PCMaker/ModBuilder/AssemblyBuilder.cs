@@ -3,9 +3,9 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using PCMaker.ModAPI;
 using UnityEditor;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 
 namespace Mod.ModBuilder
 {
@@ -26,7 +26,7 @@ namespace Mod.ModBuilder
             {{
             ""name"": ""{rootNamespace}"",
             ""rootNamespace"": ""{rootNamespace}"",
-            ""references"": [""ModBuilder"", ""PCMaker.ModAPI"", ""Unity.Addressables"", ""Unity.ResourceManager""],
+            ""references"": [""ModBuilder"", ""PCMaker.ModAPI"", ""Unity.Addressables"", ""Unity.ResourceManager"", ""VContainer""],
             ""includePlatforms"": [],
             ""excludePlatforms"": [],
             ""allowUnsafeCode"": false,
@@ -40,43 +40,53 @@ namespace Mod.ModBuilder
         }
 
 
-        public static void BuildAssembly(string pathForSave, ModBuildType targetBuildType)
+        public static void BuildAssembly(string pathForSave, SO_ModInfo modInfo, ModBuildType targetBuildType)
         {
             string pathToMs = MSBuildPathFinder.GetMsBuildPath();
 
-            Debug.Log("pathToMs: " + pathToMs);
+            ModBuildLoger.Add("pathToMs: " + pathToMs);
 
+            string CSProjName = "Mod." + modInfo.ModName;
+            
+            //string[] pathsToCSProj = Directory.GetFiles($"{Application.dataPath}/../", $"{CSProjName}.csproj");
             string[] pathsToSLNs = Directory.GetFiles($"{Application.dataPath}/../", "*.sln");
-
+            
             if (pathsToSLNs.Length > 0)
             {
-                RunCompiler(pathToMs, Path.GetFullPath(pathsToSLNs[0]), pathForSave, targetBuildType == ModBuildType.Debug);
+                string fullPathToCSProj = Path.GetFullPath(pathsToSLNs[0]);
+                
+                RunCompiler(pathToMs, fullPathToCSProj, pathForSave, targetBuildType == ModBuildType.Debug);
             }
             else
             {
-                Debug.Log("Build without scripts, you have no solution");
+                ModBuildLoger.Add($"Build without scripts, you have no {CSProjName}.csproj file");
             }
         }
 
-        private static void RunCompiler(string pathToMs, string pathToSLN, string pathForSave, bool compileWithDebug)
+        private static void RunCompiler(string pathToMs, string pathToCSProj, string pathForSave, bool compileWithDebug)
         {
-            Debug.Log("RunCompiler \n" +
-                $"pathToMs: {pathToMs}\n" +
-                $"pathToSLN: {pathToSLN}\n" +
-                $"pathForSave: {pathForSave}");
+            ModBuildLoger.Add("RunCompiler \n" +
+                              $"pathToMs: {pathToMs}\n" +
+                              $"pathToCSProj: {pathToCSProj}\n" +
+                              $"pathForSave: {pathForSave}");
 
 
-            string arguments = $"\"{pathToSLN}\" /p:OutputPath=\"{pathForSave}\" ";
+            string arguments = $"\"{pathToCSProj}\" /p:OutDir=\"{pathForSave}\"";
 
+            arguments += " /t:Build";
+            arguments += " /p:CopyLocal=false";
+            arguments += " /p:CopyLocalLockFileAssemblies=false";
+            
             if (compileWithDebug)
             {
-                arguments += "/p:Configuration=Debug  /p:DebugSymbols=true /p:DebugType=full /p:DebugInfo=full";
+                arguments += " /p:DebugSymbols=true /p:DebugType=full /p:DebugInfo=full";
             }
             else
             {
-                arguments += "/p:Configuration=Release /p:DebugSymbols=false /p:DebugType=none /p:DebugInfo=none";
+                arguments += " /p:DebugSymbols=false /p:DebugType=none /p:DebugInfo=none";
             }
-
+            
+            ModBuildLoger.Add("MSBuild args: " + arguments);
 
             ProcessStartInfo processInfo = new ProcessStartInfo
             {
@@ -85,7 +95,7 @@ namespace Mod.ModBuilder
                 RedirectStandardOutput = false,
                 RedirectStandardError = false,
                 UseShellExecute = false,
-                CreateNoWindow = true,
+                CreateNoWindow = false,
             };
 
             Process process = Process.Start(processInfo);
@@ -115,4 +125,5 @@ namespace Mod.ModBuilder
         }
     }
 }
+
 #endif

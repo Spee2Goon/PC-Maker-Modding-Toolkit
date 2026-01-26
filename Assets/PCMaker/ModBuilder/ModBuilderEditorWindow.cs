@@ -120,12 +120,12 @@ namespace Mod.ModBuilder
             //Path where save mod
             string pathForSave = EditorUtility.SaveFolderPanel("Select path to save mod", "Assets/", "");
 
-            if (pathForSave == null || pathForSave == string.Empty)
+            if (string.IsNullOrEmpty(pathForSave))
             {
                 return;
             }
 
-            Debug.Log("Save mod at: " + pathForSave);
+            Debug.Log("BuildMod, save path: " + pathForSave);
 
             ModBuilder.BuildMod(pathForSave, currentModInfo, targetBuildType);
         }
