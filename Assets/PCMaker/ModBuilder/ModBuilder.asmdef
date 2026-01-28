@@ -6,7 +6,8 @@
         "Unity.Addressables.DocExampleCode.Editor.Tests",
         "Unity.Addressables.Editor",
         "Unity.Addressables.Editor.Tests",
-        "Unity.Addressables.Runtime.Tests"
+        "Unity.Addressables.Runtime.Tests",
+        "PCMaker.Services"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 
 using System.IO;
+using UnityEngine;
 
 namespace Mod.ModBuilder
 {
@@ -10,12 +11,8 @@ namespace Mod.ModBuilder
         {
             string path = Path.Combine(pathForSave, "manifest.json");
 
-            string manifest =
-                @$"{{
-""ModName"": ""{modInfo.ModName}"",
-""ModVersion"": ""{modInfo.ModVersion}""
-}}";
-
+            string manifest = JsonUtility.ToJson(modInfo, true);
+            
             File.WriteAllText(path, manifest);
         }
     }

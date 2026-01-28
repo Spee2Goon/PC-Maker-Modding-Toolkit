@@ -54,8 +54,10 @@ namespace Mod.ModBuilder
                 GUILayout.Space(5);
 
                 currentModInfo.ModName = EditorGUILayout.TextField("Name", currentModInfo.ModName);
-
+                
                 currentModInfo.ModVersion = EditorGUILayout.TextField("Version", currentModInfo.ModVersion);
+
+                currentModInfo.CanBeDisabled = EditorGUILayout.Toggle("Can Be Disabled", currentModInfo.CanBeDisabled);
             }
         }
 

@@ -1,6 +1,6 @@
-namespace PCMaker.ModAPI
+namespace PCMaker.Services
 {
-    public interface IModConsoleCommand
+    public interface IConsoleCommand
     {
         string Command { get; }
         string Description { get; }

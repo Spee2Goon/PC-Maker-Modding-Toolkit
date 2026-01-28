@@ -3,7 +3,6 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using PCMaker.ModAPI;
 using UnityEditor;
 using UnityEngine;
 
@@ -26,7 +25,7 @@ namespace Mod.ModBuilder
             {{
             ""name"": ""{rootNamespace}"",
             ""rootNamespace"": ""{rootNamespace}"",
-            ""references"": [""ModBuilder"", ""PCMaker.ModAPI"", ""Unity.Addressables"", ""Unity.ResourceManager"", ""VContainer""],
+            ""references"": [""ModBuilder"", ""PCMaker.Services"", ""Unity.Addressables"", ""Unity.ResourceManager"", ""VContainer"", ""Unity.Cinemachine""],
             ""includePlatforms"": [],
             ""excludePlatforms"": [],
             ""allowUnsafeCode"": false,
@@ -102,26 +101,6 @@ namespace Mod.ModBuilder
 
             process.WaitForExit();
             process.Close();
-
-            ClearBuilderCompileInfo(pathForSave);
-        }
-
-        private static void ClearBuilderCompileInfo(string pathForSave)
-        {
-            string[] paths = new string[] {
-            Path.Combine(pathForSave, "ModBuilder.dll"),
-            Path.Combine(pathForSave, "ModBuilder.pdb"),
-            Path.Combine(pathForSave, "PCMaker.ModAPI.dll"),
-            Path.Combine(pathForSave, "PCMaker.ModAPI.pdb"),
-        };
-
-            for (int i = 0; i < paths.Length; i++)
-            {
-                if (File.Exists(paths[i]))
-                {
-                    File.Delete(paths[i]);
-                }
-            }
         }
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PCMaker.ModAPI
+namespace Mod.ModBuilder
 {
     public static class ModBuildLoger
     {

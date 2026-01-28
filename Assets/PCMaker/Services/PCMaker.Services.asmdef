@@ -1,9 +1,10 @@
 {
-    "name": "PCMaker.ModAPI",
-    "rootNamespace": "PCMaker.ModAPI",
+    "name": "PCMaker.Services",
+    "rootNamespace": "PCMaker.Services",
     "references": [
         "Unity.TextMeshPro",
-        "VContainer"
+        "VContainer",
+        "Unity.Cinemachine"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
