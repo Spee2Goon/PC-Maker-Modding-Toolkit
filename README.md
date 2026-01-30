@@ -3,13 +3,13 @@
   <h1>+ PC Maker - Modding Toolkit</h1>
 
   <a href="https://unity.com">
-      <img src="https://img.shields.io/badge/UNITY-6.3.4f1-000000?style=for-the-badge&logo=unity&logoColor=white&labelColor=0d1117" alt="Unity 6.3.4f1">
+      <img src="https://img.shields.io/badge/UNITY-6.3.4f1-000000?style=for-the-badge&logo=unity&logoColor=white&labelColor=0d1117" alt="Unity 6.3.4f1"></a>
 
   <a href="https://store.steampowered.com/app/3138760/_PC_Maker/">
-      <img src="https://img.shields.io/badge/Update-5-666666?style=for-the-badge&labelColor=0d1117" alt="Update 5">
+      <img src="https://img.shields.io/badge/Update-5-666666?style=for-the-badge&labelColor=0d1117" alt="Update 5"></a>
 
   <a href="">
-      <img src="https://img.shields.io/badge/Not Released Yet-d44c4c?style=for-the-badge" alt="Not Released">
+      <img src="https://img.shields.io/badge/Not Released Yet-d44c4c?style=for-the-badge" alt="Not Released"></a>
 
 </div>
 
@@ -52,5 +52,5 @@ git clone https://github.com/Spee2Goon/PC-Maker-Modding-Toolkit
 ```
 or
 
-<img src="Documentation/Images/1.png" width="320"/>
-<img src="Documentation/Images/2.png" width="320"/>
+<img src="Documentation/Images/1.png" width="250"/>
+<img src="Documentation/Images/2.png" width="430"/>
