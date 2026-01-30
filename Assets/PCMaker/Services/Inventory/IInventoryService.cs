@@ -13,11 +13,8 @@ namespace PCMaker.Services
         IInventoryItem GetItemByType<T>();
         bool HasItem(IInventoryItem item);
 
-        void AddItemToInventory(IInventoryItem item);
         void AddItemToInventory(IInventoryItem item, bool notify = true);
-        void RemoveItemFromInventory(IInventoryItem item);
         void RemoveItemFromInventory(IInventoryItem item, bool notify = true);
-        void RemoveItemFromInventory(string itemGUID);
         void RemoveItemFromInventory(string itemGUID, bool notify = true);
         
         IReadOnlyList<IInventoryItem> GetItems();
