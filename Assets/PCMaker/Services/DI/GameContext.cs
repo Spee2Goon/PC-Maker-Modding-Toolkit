@@ -2,7 +2,7 @@ using VContainer;
 
 namespace PCMaker.Services
 {
-    public static class GameGlobalContext
+    public static class GameContext
     {
         public static bool isAssetsLoaded = false;
         public static bool RequreMenuTransition = true;
