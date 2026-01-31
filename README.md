@@ -55,7 +55,10 @@ or
 <img src="Documentation/Images/1.png" width="193"/>
 <img src="Documentation/Images/2.png" width="448"/>
 
+---
 
 <h3>Begin Development</h3>
 <h4>Open Build Mod Window</h4>
 <img src="Documentation/Images/3.png" width="187"/>
+<h4>Click On Create Mod Info Button</h4>
+<img src="Documentation/Images/4.png" width="501"/>
