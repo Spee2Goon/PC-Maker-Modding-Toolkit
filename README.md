@@ -60,5 +60,9 @@ or
 <h3>Begin Development</h3>
 <h4>Open Build Mod Window</h4>
 <img src="Documentation/Images/3.png" width="187"/>
-<h4>Click On Create Mod Info Button</h4>
+<h4>Click on create mod info button</h4>
 <img src="Documentation/Images/4.png" width="501"/>
+<h4>Enter name of your mod and then click on Create Assembly Definition button</h4>
+<img src="Documentation/Images/5.png" width="501"/>
+<h4>After these steps, you should have a Mod folder containing ModAssemblyDefinition.asmdef and ModInfo.asset</h4>
+<h4>Create your scripts only in the Mod folder so that they can be compiled into a single DLL later.</h4>
