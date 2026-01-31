@@ -6,14 +6,13 @@ namespace PCMaker.Services
     {
         public static bool isAssetsLoaded = false;
 
-        //Save info
         public static SaveFileInfo CurrentSaveFileInfo;
 
         public static IObjectResolver LoaderSceneResolver;
         public static IObjectResolver MenuSceneResolver;
         public static IObjectResolver GameSceneResolver;
         
-        //Really Really bad thing
+        
         public static IOutlineService OutlineService;
     }
 }
