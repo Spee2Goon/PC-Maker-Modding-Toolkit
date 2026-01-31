@@ -5,7 +5,6 @@ namespace PCMaker.Services
     public static class GameContext
     {
         public static bool isAssetsLoaded = false;
-        public static bool RequreMenuTransition = true;
 
         //Save info
         public static SaveFileInfo CurrentSaveFileInfo;

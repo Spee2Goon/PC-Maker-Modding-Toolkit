@@ -66,9 +66,9 @@ namespace PCMaker.Services
             _isPinsShowing = true;
             HidePins();
             
-            IWorkbenchService workbenchService = GameGlobalContext.LoaderSceneResolver.Resolve<IWorkbenchService>();
-            IPCBRepairService repairService = GameGlobalContext.LoaderSceneResolver.Resolve<IPCBRepairService>();
-            IWorkbenchSelectionService workbenchSelectionService = GameGlobalContext.LoaderSceneResolver.Resolve<IWorkbenchSelectionService>();
+            IWorkbenchService workbenchService = GameContext.LoaderSceneResolver.Resolve<IWorkbenchService>();
+            IPCBRepairService repairService = GameContext.LoaderSceneResolver.Resolve<IPCBRepairService>();
+            IWorkbenchSelectionService workbenchSelectionService = GameContext.LoaderSceneResolver.Resolve<IWorkbenchSelectionService>();
             
             for (int i = 0; i < Slots.Length; i++)
             {
