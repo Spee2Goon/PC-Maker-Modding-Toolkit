@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace PCMaker.Services
 {
-    //PCPartObject is instance of pc part. (prefab). contain object information like camera center and other staf
     public class PCPartObject : MonoBehaviour, IPCParentObject
     {
         public Transform CameraCenter;
@@ -39,24 +37,8 @@ namespace PCMaker.Services
 
         protected bool isInjected;
         protected bool isDestroyed;
-
-        public void SetDependencies(PCPartObjectDependencies dependencies)
-        {
-            InventoryService = dependencies.InventoryService;
-            PCPartsService = dependencies.PCPartsService;
-            WorkbenchService = dependencies.WorkbenchService;
-            WorkbenchSelectionService = dependencies.WorkbenchSelectionService;
-            pcbRepairService = dependencies.pcbRepairService;
-            pcbThermalInterfaceService = dependencies.pcbThermalInterfaceService;
-            configService = dependencies.configService;
-            PartsInstallService = dependencies.PartsInstallService;
-            PartsRemoveService = dependencies.PartsRemoveService;
-            PCBPoolService = dependencies.PCBPoolService;
-            LocalizationService = dependencies.LocalizationService;
-
-            isInjected = true;
-        }
-
+        
+        
         public virtual void ConstructObject(PCPartObjectSpawnArguments args, IPCParentObject parentObject, PCPart sourcePart)
         {
             Debug.Log($"[PCPartObject] ConstructObject ({sourcePart.SaveKey}), args: {args}", gameObject);
@@ -74,8 +56,6 @@ namespace PCMaker.Services
             CurrentObjectSpawnArguments = args;
             ParentObject = parentObject;
             PartReference = sourcePart;
-
-            validate();
         }
 
         public virtual void DestroyObject()
@@ -143,11 +123,6 @@ namespace PCMaker.Services
         public virtual void SetObjectVisible(bool visible)
         {
             Debug.Log($"[PCPartObject] ({PartReference.SaveKey}) Set Object Visible: {visible}", gameObject);
-
-            for (int i = 0; i < Renderers.Length; i++)
-            {
-                Renderers[i].gameObject.SetActive(visible);
-            }
         }
 
         public virtual float GetDistanceToTarget()
@@ -175,46 +150,10 @@ namespace PCMaker.Services
 
         public virtual bool TryGetPCPartByGUID(string guid, out IPCParentObject parent)
         {
-            if (guid == PartReference.GUID)
-            {
-                parent = this;
-                return true;
-            }
-
             parent = null;
             return false;
         }
 
-        protected virtual void OnSelectFlipPartOption()
-        {
-            Debug.Log("[PCPartObject] Flip Part", gameObject);
-            OnRequireFlip?.Invoke();
-        }
-
-
-        protected virtual void validate()
-        {
-            Debug.Log($"[PCPartObject] Validate: {PartReference.SaveKey}", gameObject);
-
-            if (isDestroyed)
-            {
-                Debug.LogError("[PCPartObject] isDestroyed!", gameObject);
-            }
-
-            if (PartReference == null)
-            {
-                Debug.LogError("[PCPartObject] PartReference is null!", gameObject);
-            }
-
-            if (PartReference.SaveKey == string.Empty)
-            {
-                Debug.LogError("[PCPartObject] SaveKey is empty!", gameObject);
-            }
-
-            if (!isInjected)
-            {
-                Debug.LogError("[PCPartObject] Part not injected!", gameObject);
-            }
-        }
+        protected virtual void OnSelectFlipPartOption() { }
     }
 }

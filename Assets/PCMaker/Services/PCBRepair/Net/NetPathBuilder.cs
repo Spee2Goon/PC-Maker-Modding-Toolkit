@@ -13,19 +13,10 @@ namespace PCMaker.Services
         [SerializeField]
         private MeshRenderer RendererComponent;
         
-        public void AddPinLines(BoardPin targetPin)
-        {
-            
-        }
+        public void AddPinLines(BoardPin targetPin) { }
         
-        public void BuildMesh()
-        {
-            
-        }
+        public void BuildMesh() { }
 
-        public void ClearNet()
-        {
-            
-        }
+        public void ClearNet() { }
     }
 }

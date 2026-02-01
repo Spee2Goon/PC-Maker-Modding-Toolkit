@@ -6,6 +6,7 @@
 
 <h3><a href="DI/GameContext.md">Game Context</a></h3>
 <h3><a href="DI/AssetsLoaderLifetimeScope.md">Assets Loader Lifetime Scope</a></h3>
+<h3><a href="DI/IAssetsResolverExtension.md">Assets Resolver Extension</a></h3>
 <h3><a href="DI/MainMenuLifetimeScope.md">Main Menu Lifetime Scope</a></h3>
 <h3><a href="DI/GameLifetimeScope.md">Game Lifetime Scope</a></h3>
 

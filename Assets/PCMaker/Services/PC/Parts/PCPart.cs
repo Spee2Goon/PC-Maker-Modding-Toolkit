@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Profiling;
 
 namespace PCMaker.Services
 {
@@ -21,36 +19,11 @@ namespace PCMaker.Services
         protected IWorkbenchSelectionService WorkbenchSelectionService;
         protected IMoneyService MoneyService;
         protected IPCBThermalInterfacesService ThermalInterfacesService;
-
-        
-        public void SetDependencies(PCPartDependencies dependencies)
-        {
-            PCPartsService = dependencies.PCPartsService;
-            PCPartsInstallService = dependencies.PCPartsInstallService;
-            InventoryService = dependencies.InventoryService;
-            PCBObjectPoolService = dependencies.PCBObjectPoolService;
-            LocalizationService = dependencies.LocalizationService;
-            WorkbenchService = dependencies.WorkbenchService;
-            WorkbenchSelectionService = dependencies.WorkbenchSelectionService;
-            MoneyService = dependencies.MoneyService;
-            ThermalInterfacesService = dependencies.ThermalInterfacesService;
-        }
-        
         
         
         public virtual bool AllowLoad { get => true; }
 
         public string GUID { get; private set; }
-
-        public void SetGUID(string guid)
-        {
-            GUID = guid;
-            
-            Debug.Log($"[PCPart] Set Part ({SaveKey}) guid : {GUID}");
-        }
-
-        
-        public void SetNewRandomGUID() => GUID = Guid.NewGuid().ToString();
 
         public virtual ConnectorType[] TargetSlotTypes => new ConnectorType[0];
         
@@ -73,31 +46,9 @@ namespace PCMaker.Services
 
         public virtual void AddDefaultParts() { }
 
-        public virtual ObjectSaveData CapturePart()
-        {
-            Dictionary<string, string> data = new Dictionary<string, string>();
-            
-            data["SaveKey"] = SaveKey;
-            
-            return new ObjectSaveData(GUID, data);
-        }
-        
-        public virtual PCPartObject CreatePartObject(Transform parentTransform, IPCParentObject parentObject, PCPartObjectSpawnArguments arguments)
-        {
-            Debug.Log($"[PCPart] CreatePartObject : {SaveKey}");
-            
-            Profiler.BeginSample($"Create Part Object : {SaveKey}");
-            
-            PCPartObject spawnedPart = GameObject.Instantiate(GetPartPrefab(), parentTransform);
+        public virtual ObjectSaveData CapturePart() => null;
 
-            PCPartsService.InjectPCPartObject(spawnedPart);
-            
-            spawnedPart.ConstructObject(arguments, parentObject, this);
-
-            Profiler.EndSample();
-            
-            return spawnedPart;
-        }
+        public virtual PCPartObject CreatePartObject(Transform parentTransform, IPCParentObject parentObject, PCPartObjectSpawnArguments arguments) => null;
 
         public virtual bool TryMakePartInstance(ObjectSaveData saveData, out PCPart part)
         {

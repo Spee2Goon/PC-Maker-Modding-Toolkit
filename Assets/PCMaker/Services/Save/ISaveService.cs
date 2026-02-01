@@ -6,6 +6,7 @@ namespace PCMaker.Services
     public interface ISaveService
     {
         SaveFileInfo CreateNewSave(string saveName);
+        
         Task SaveGameAsync(bool isAutoSave = false);
 
         void LoadGame();
@@ -15,7 +16,6 @@ namespace PCMaker.Services
         void OpenSavesDirectory();
 
         Task<SaveFileInfo[]> GetAllSavesAsync(SaveFilesSortingType sortingType);
-        
 
         string GetPathToSavesDirectory();
 

@@ -2,10 +2,7 @@ namespace PCMaker.Services
 {
     public class LoadedPCParts
     {
-        public LoadedPCParts(PCPart[] parts)
-        {
-            
-        }
+        public LoadedPCParts(PCPart[] parts) { }
 
         public PCPart[] Parts;
 

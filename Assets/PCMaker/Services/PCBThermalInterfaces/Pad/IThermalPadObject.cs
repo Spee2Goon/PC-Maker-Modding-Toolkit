@@ -9,7 +9,9 @@ namespace PCMaker.Services
         
         void SetupThermalPad(Vector2 sizeMM, SO_OutlineNormalsData customPadNormals);
 
+        
         event Action OnEnablePadOutline;
+        
         event Action OnDisablePadOutline;
     }
 }

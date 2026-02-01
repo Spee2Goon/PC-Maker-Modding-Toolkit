@@ -25,44 +25,24 @@ namespace PCMaker.Services
         public event Action OnPadStateChange;
 
         
-        public virtual void Setup(PCPartObject parentObject)
-        {
-            
-        }
+        public virtual void Setup(PCPartObject parentObject) { }
 
-        public virtual void Dispose()
-        {
-            
-        }
+        public virtual void Dispose() { }
 
-        public virtual void ProcessPad(IThermalPadObject pad)
-        {
-            
-        }
+        public virtual void ProcessPad(IThermalPadObject pad) { }
         
-        public virtual void SetPad(IThermalPadObject pad)
-        {
-            
-        }
-        
-        public virtual bool CanConnectThermalPad(IThermalPad thermalPad)
-        {
-            return true;
-        }
+        public virtual void SetPad(IThermalPadObject pad) { }
 
-        public virtual bool CanUseThermalPadsPack(IThermalPadPack pack)
-        {
-            return false;
-        }
-        
+        public virtual bool CanConnectThermalPad(IThermalPad thermalPad) => true;
 
-        public virtual Sprite GetActualIcon()
-        {
-            return IconWithoutPad;
-        }
+        public virtual bool CanUseThermalPadsPack(IThermalPadPack pack) => true;
+
+        public virtual Sprite GetActualIcon() => IconWithoutPad;
         
         public bool HasPad() => false;
+
         public IThermalPadObject GetPad() => null;
+        
         public Vector2 GetPadSize() => PadSize;
     }
 }
