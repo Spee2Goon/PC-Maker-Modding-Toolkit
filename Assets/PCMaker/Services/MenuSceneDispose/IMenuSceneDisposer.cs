@@ -1,6 +1,6 @@
 namespace PCMaker.Services
 {
-    public interface IMenuSceneDisposeAction
+    public interface IMenuSceneDisposer
     {
         void DisposeByMenuScene();
     }

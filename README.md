@@ -13,6 +13,21 @@
 
 </div>
 
+  <br>
+  
+<div>
+
+<h3>⚠️ Its Early Access</h3>
+
+  <p>
+  We <b>do not recommend</b> creating large mods at this time. The game API may be subject to significant changes up to and including Update 6
+  </p>
+
+</div>
+
+  <br>
+
+---
 
   <br>
 

@@ -1,6 +1,6 @@
 namespace PCMaker.Services
 {
-    public interface IMenuSceneInstallAction
+    public interface IMenuSceneInstaller
     {
         void InstallByMenuScene();
     }

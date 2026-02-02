@@ -1,6 +1,6 @@
 namespace PCMaker.Services
 {
-    public interface IGameSceneInstallerAction
+    public interface IGameSceneInstaller
     {
         void InstallByGameScene();
     }

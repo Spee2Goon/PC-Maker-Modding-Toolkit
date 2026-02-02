@@ -1,6 +1,6 @@
 namespace PCMaker.Services
 {
-    public interface IGameSceneDisposeAction
+    public interface IGameSceneDisposer
     {
         void DisposeByGameScene();
     }
