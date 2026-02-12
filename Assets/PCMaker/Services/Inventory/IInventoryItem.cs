@@ -6,10 +6,6 @@ namespace PCMaker.Services
 {
     public interface IInventoryItem
     {
-        ObjectSaveData CaptureInventoryPart();
-        
-        Task LoadIconResources();
-        
         Sprite GetInventoryIcon();
         
         event Action OnIconChange;
@@ -19,12 +15,10 @@ namespace PCMaker.Services
         
         float IconScale { get; }
         
-        string SaveKey { get; }
+        string[] SaveKeys { get; }
         
         string GUID { get; }
         
         float Price { get; }
-        
-        bool CanSell { get; }
     }
 }

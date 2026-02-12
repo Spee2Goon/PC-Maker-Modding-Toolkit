@@ -37,7 +37,7 @@ namespace PCMaker.Services
 
         public PCPartObject[] Connect(PCPart part, PCPartObjectSpawnArguments arguments)
         {
-            Debug.Log($"Connect object to connector: {part.SaveKey}");
+            Debug.Log($"Connect object to connector: {part.SaveKeys[0]}");
             
             List<PCPartObject> spawnedPartsForInstall = new List<PCPartObject>();
             

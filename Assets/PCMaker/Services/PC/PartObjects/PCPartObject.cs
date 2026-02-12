@@ -39,31 +39,9 @@ namespace PCMaker.Services
         protected bool isDestroyed;
         
         
-        public virtual void ConstructObject(PCPartObjectSpawnArguments args, IPCParentObject parentObject, PCPart sourcePart)
-        {
-            Debug.Log($"[PCPartObject] ConstructObject ({sourcePart.SaveKey}), args: {args}", gameObject);
+        public virtual void ConstructObject(PCPartObjectSpawnArguments args, IPCParentObject parentObject, PCPart sourcePart) { }
 
-            if (args == null)
-            {
-                Debug.LogError("[PCPartObject] Arguments cannot be null", gameObject);
-            }
-
-            if (parentObject == null && this is not IPCCaseObject && args.ObjectSpawnEnvironment != PCPartObject_SpawnEnvironment.Workbench)
-            {
-                Debug.LogError("[PCPartObject] ParentObject cannot be null", gameObject);
-            }
-
-            CurrentObjectSpawnArguments = args;
-            ParentObject = parentObject;
-            PartReference = sourcePart;
-        }
-
-        public virtual void DestroyObject()
-        {
-            Debug.Log($"[PCPartObject] Destroy Object : {PartReference.SaveKey}", gameObject);
-
-            isDestroyed = true;
-        }
+        public virtual void DestroyObject() { }
 
         //Connect
         public virtual bool CanConnect(PCPart part) => true; //Check if we can connect other part to this part
@@ -76,70 +54,26 @@ namespace PCMaker.Services
         }
 
         //Break connect other part
-        public virtual void BreakInstall()
-        {
-            OnBreakInstall?.Invoke(this);
-            StopSomethingCoroutine();
-            DestroyObject();
-        }
+        public virtual void BreakInstall() { }
 
-        public virtual void FinishInstall()
-        {
-            Debug.Log($"[PCPartObject] ({PartReference.SaveKey}) Finish Install", gameObject);
-
-            OnFinishInstall?.Invoke(this);
-        }
+        public virtual void FinishInstall() { }
 
         //Demontage
-        public virtual void BeginDemontage()
-        {
-            Debug.Log($"[PCPartObject] ({PartReference.SaveKey}) Begin Demontage", gameObject);
-        }
+        public virtual void BeginDemontage() { }
 
-        public virtual void BreakDemontage()
-        {
-            Debug.Log($"[PCPartObject] ({PartReference.SaveKey}) Break Demontage", gameObject);
+        public virtual void BreakDemontage() { }
 
-            OnBreakDemontage?.Invoke(this);
-        }
+        public virtual void FinishDemontage() { }
 
-        public virtual void FinishDemontage()
-        {
-            Debug.Log($"[PCPartObject] ({PartReference.SaveKey}) Finish Demontage", gameObject);
+        protected virtual void onClickOnInstall() { }
 
-            CallOnFinishDemontageEvent();
+        public virtual void SetObjectVisible(bool visible) { }
 
-            DestroyObject();
-        }
-
-
-        protected virtual void onClickOnInstall()
-        {
-            Debug.Log($"[PCPartObject] ({PartReference.SaveKey}) On Click On Install", gameObject);
-
-            OnClickOnInstall?.Invoke(this);
-        }
-
-        public virtual void SetObjectVisible(bool visible)
-        {
-            Debug.Log($"[PCPartObject] ({PartReference.SaveKey}) Set Object Visible: {visible}", gameObject);
-        }
-
-        public virtual float GetDistanceToTarget()
-        {
-            return DefaultCameraDistance;
-        }
+        public virtual float GetDistanceToTarget() => 1;
 
         protected Coroutine waitForSomethingCoroutine;
 
-        protected void StopSomethingCoroutine()
-        {
-            if (waitForSomethingCoroutine != null)
-            {
-                StopCoroutine(waitForSomethingCoroutine);
-                waitForSomethingCoroutine = null;
-            }
-        }
+        protected void StopSomethingCoroutine() { }
 
         public PCPart GetPartReference() => PartReference;
         public IPC GetPartPC() => CurrentObjectSpawnArguments.ParentPC;

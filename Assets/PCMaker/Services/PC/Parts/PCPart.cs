@@ -6,7 +6,7 @@ namespace PCMaker.Services
 {
     public abstract class PCPart
     {
-        public virtual string SaveKey => string.Empty;
+        public virtual string[] SaveKeys =>  new [] { string.Empty } ;
         
         public event Action<PCPartObject> OnCreatePartObject;
 
@@ -25,11 +25,12 @@ namespace PCMaker.Services
 
         public string GUID { get; private set; }
 
+        public void SetGUID(string guid) { }
+        
         public virtual ConnectorType[] TargetSlotTypes => new ConnectorType[0];
         
         public virtual async Task<bool> LoadResourcesAsync()
         {
-            await Task.Delay(50);
             return true;
         }
 
@@ -37,11 +38,11 @@ namespace PCMaker.Services
         
         public virtual PCPartObject GetPartPrefab()
         {
-            throw new NotImplementedException($"Override component prefab please!, key: {SaveKey}");
+            throw new NotImplementedException($"Override component prefab please!, key: {SaveKeys[0]}");
         }
         public virtual Board GetBoardPrefab()
         {
-            throw new NotImplementedException($"Override component board please!, key: {SaveKey}");
+            throw new NotImplementedException($"Override component board please!, key: {SaveKeys[0]}");
         }
 
         public virtual void AddDefaultParts() { }

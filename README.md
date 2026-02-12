@@ -3,7 +3,7 @@
   <h1>+ PC Maker - Modding Toolkit</h1>
 
   <a href="https://unity.com">
-      <img src="https://img.shields.io/badge/UNITY-6.3.6f1-0d0d0d?style=for-the-badge&logo=unity&logoColor=white&labelColor=0d0d0d" alt="Unity 6.3.6f1"></a>
+      <img src="https://img.shields.io/badge/UNITY-6.3.8f1-0d0d0d?style=for-the-badge&logo=unity&logoColor=white&labelColor=0d0d0d" alt="Unity 6.3.8f1"></a>
 
   <a href="https://store.steampowered.com/app/3138760/_PC_Maker/">
       <img src="https://img.shields.io/badge/Update-5-424242?style=for-the-badge&labelColor=0d0d0d" alt="Update 5"></a>

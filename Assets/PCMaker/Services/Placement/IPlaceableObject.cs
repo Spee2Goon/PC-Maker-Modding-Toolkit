@@ -27,7 +27,7 @@ namespace PCMaker.Services
         IPlaceableObjectInstance RestoreInstanceByState(Dictionary<string, string> state);
         
         
-        string SaveKey { get; }
+        string[] SaveKeys { get; }
         
         Sprite Icon { get; }
         

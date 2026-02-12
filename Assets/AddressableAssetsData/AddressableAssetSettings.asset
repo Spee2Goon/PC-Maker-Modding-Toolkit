@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 196e113ed2cd82444bd3a7152296d235
   m_currentHash:
     serializedVersion: 2
-    Hash: c69b77aa54da6b591db8d74b5387432c
+    Hash: 5f31f1691f47f83547bfc856ba047f4e
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 1
   m_BundleLocalCatalog: 0
@@ -72,7 +72,7 @@ MonoBehaviour:
       m_ProfileName: Default
       m_Values:
       - m_Id: 0a3b5cc7ceaf46a4494156b4bd82876b
-        m_Value: C:\Users\Spee2Goon\Desktop\mod1\DeadConsole
+        m_Value: 
       - m_Id: 3450586197896d147baeccd33ee99947
         m_Value: '[ModLoadPath]'
       - m_Id: 43d396cfc56debe4a8b5a7cc3bad5b17

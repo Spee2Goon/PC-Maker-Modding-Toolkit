@@ -6,6 +6,8 @@ namespace PCMaker.Services
         
         Screw GetPCIScrewPrefab();
         
+        Screw GetStandoffScrewPrefab();
+        
         bool CanConnect(PCPart part);
         
         PCPartObject[] Connect(PCPart part, PCPartObjectSpawnArguments arguments);
